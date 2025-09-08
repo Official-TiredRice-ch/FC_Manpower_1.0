@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import AttendanceTrendsChart from "./AttendanceTrendsChart";
-import "../../styles/Dashboard.css";
+import "../../styles/dashboard.css";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
