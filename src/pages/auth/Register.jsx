@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
+import "../../styles/Register.css";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -88,61 +89,60 @@ export default function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleRegister}
-        className="bg-white p-6 rounded-2xl shadow-md w-96"
-      >
-        <h1 className="text-xl font-bold text-center mb-4">
-          Employee Registration
-        </h1>
+  <div className="register-container">
+    <form onSubmit={handleRegister} className="register-form">
+      <h1 className="register-title">Employee Registration</h1>
 
-        <input
-          name="full_name"
-          placeholder="Full Name"
-          value={formData.full_name}
-          onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
-          required
-        />
+      <input
+        name="full_name"
+        placeholder="Full Name"
+        value={formData.full_name}
+        onChange={handleChange}
+        className="register-input"
+        required
+      />
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
-          required
-        />
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        value={formData.email}
+        onChange={handleChange}
+        className="register-input"
+        required
+      />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
-          required
-        />
+      <input
+        name="password"
+        type="password"
+        placeholder="Password"
+        value={formData.password}
+        onChange={handleChange}
+        className="register-input"
+        required
+      />
 
-        <input
-          name="contact_number"
-          placeholder="Contact Number"
-          value={formData.contact_number}
-          onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
-        />
+      <input
+        name="contact_number"
+        placeholder="Contact Number"
+        value={formData.contact_number}
+        onChange={handleChange}
+        className="register-input"
+      />
 
-        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+      {error && <p className="register-error">{error}</p>}
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          Register
-        </button>
-      </form>
-    </div>
-  );
+      <button type="submit" className="register-btn">
+        Register
+      </button>
+
+      <p className="switch-auth">
+  Go back to log in?{" "}
+  <span onClick={() => navigate("/Login")} className="auth-link">
+    Log in here
+  </span>
+</p>
+    </form>
+  </div>
+);
 }

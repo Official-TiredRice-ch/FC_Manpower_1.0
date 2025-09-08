@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import "../../styles/Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -132,15 +133,15 @@ export default function Login() {
     else navigate("/employee-dashboard");
   };
 
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form className="bg-white p-6 rounded-2xl shadow-md w-96" onSubmit={handleLogin}>
-        <h1 className="text-2xl font-bold text-center mb-4">FreshCut Login</h1>
+ return (
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleLogin}>
+        <h1 className="login-title">FreshCut Login</h1>
 
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-2 mb-3 border rounded"
+          className="login-input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -148,39 +149,43 @@ export default function Login() {
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-2 mb-4 border rounded"
+          className="login-input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+        {error && <p className="error-message">{error}</p>}
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mb-3"
-        >
+        <button type="submit" className="login-btn">
           Login
         </button>
 
-        <hr className="my-4" />
+<p className="switch-auth">
+  Don’t have an account?{" "}
+  <span onClick={() => navigate("/Register")} className="auth-link">
+    Register here
+  </span>
+</p>
 
-        <div className="flex justify-center gap-4">
+        <div className="divider">or continue with</div>
+
+        <div className="social-container">
           <button
             type="button"
             onClick={() => handleSocialLogin("google")}
-            className="flex items-center gap-2 border p-2 rounded hover:bg-gray-200"
+            className="social-btn google-btn"
           >
-            <img src="/google-icon.svg" alt="Google" className="w-5 h-5" />
+            <img src="/google-icon.png" alt="Google" />
             Continue with Google
           </button>
 
           <button
             type="button"
             onClick={() => handleSocialLogin("facebook")}
-            className="flex items-center gap-2 border p-2 rounded hover:bg-gray-200"
+            className="social-btn facebook-btn"
           >
-            <img src="/facebook-icon.svg" alt="Facebook" className="w-5 h-5" />
+            <img src="/facebook-icon.png" alt="Facebook" />
             Continue with Facebook
           </button>
         </div>

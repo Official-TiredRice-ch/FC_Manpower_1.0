@@ -1,0 +1,71 @@
+/* Dashboard wrapper */
+.dashboard {
+  padding: 1.5rem;
+  color: #111827; /* gray-900 */
+  font-family: "Inter", sans-serif;
+}
+
+/* Title + subtitle */
+.dashboard-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-subtitle {
+  margin-bottom: 1.5rem;
+  color: #4b5563; /* gray-600 */
+}
+
+/* Grid layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card */
+.dashboard-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1f2937; /* gray-800 */
+}
+
+/* Chart wrapper */
+.chart-wrapper {
+  height: 16rem;
+}
+
+/* Metric card */
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.metric {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #2563eb; /* blue-600 */
+}

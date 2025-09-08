@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import AttendanceTrendsChart from "./AttendanceTrendsChart";
+import "../../styles/Dashboard.css";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -35,20 +36,18 @@ export default function Dashboard() {
     fetchEmployees();
   }, []);
 
-  return (
-    <div>
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      <p className="mt-2 mb-6">
+   return (
+    <div className="dashboard">
+      <h1 className="dashboard-title">Dashboard</h1>
+      <p className="dashboard-subtitle">
         Overview of manpower distribution and activity.
       </p>
 
-      {/* GRID for dashboard cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        
+      <div className="dashboard-grid">
         {/* ✅ Card 1: Employees by Role */}
-        <div className="bg-white shadow-md rounded-2xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Employees by Role</h2>
-          <div className="h-64">
+        <div className="dashboard-card">
+          <h2 className="card-title">Employees by Role</h2>
+          <div className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -61,15 +60,14 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* ✅ Card 2: Attendance Trends (Pie Chart) */}
+        {/* ✅ Card 2: Attendance Trends */}
         <AttendanceTrendsChart />
 
-        {/* ✅ Card 3: Total Employees (simple metric card) */}
-        <div className="bg-white shadow-md rounded-2xl p-6 flex flex-col justify-center items-center">
-          <h2 className="text-lg font-semibold mb-2">Total Employees</h2>
-          <p className="text-4xl font-bold text-blue-600">{totalEmployees}</p>
+        {/* ✅ Card 3: Total Employees */}
+        <div className="dashboard-card center">
+          <h2 className="card-title">Total Employees</h2>
+          <p className="metric">{totalEmployees}</p>
         </div>
-
       </div>
     </div>
   );

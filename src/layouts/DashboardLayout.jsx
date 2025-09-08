@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
+import "../styles/DashboardLayout.css";
 
 export default function DashboardLayout({ children }) {
   const { user, profile, setUser } = useAuth(); // ✅ include setUser
@@ -32,54 +33,43 @@ export default function DashboardLayout({ children }) {
 };
 
 
-  return (
-    <div className="flex h-screen bg-gray-100">
+   return (
+    <div className="dashboard-layout">
       {/* Sidebar */}
-      <aside className="w-64 bg-blue-700 text-white p-4">
-        <h1 className="text-xl font-bold mb-6">FreshCut</h1>
-        <nav className="flex flex-col gap-2">
+      <aside className="sidebar">
+        <h1 className="sidebar-title">FreshCut</h1>
+        <nav className="sidebar-nav">
           {profile?.role === "admin" ? (
             <>
-              <Link to="/dashboard" className="hover:bg-blue-600 p-2 rounded">
+              <Link to="/dashboard" className="sidebar-link">
                 Dashboard
               </Link>
-              <Link to="/employees" className="hover:bg-blue-600 p-2 rounded">
+              <Link to="/employees" className="sidebar-link">
                 Employees
               </Link>
-              <Link
-                to="/pending-employees"
-                className="hover:bg-blue-600 p-2 rounded"
-              >
+              <Link to="/pending-employees" className="sidebar-link">
                 Pending Employees
               </Link>
-              <Link to="/schedules" className="hover:bg-blue-600 p-2 rounded">
+              <Link to="/schedules" className="sidebar-link">
                 Schedules
               </Link>
             </>
           ) : (
-            <>
-              <Link
-                to="/employee-dashboard"
-                className="hover:bg-blue-600 p-2 rounded"
-              >
-                My Dashboard
-              </Link>
-            </>
+            <Link to="/employee-dashboard" className="sidebar-link">
+              My Dashboard
+            </Link>
           )}
         </nav>
 
-        <button
-          onClick={handleLogout}
-          className="mt-auto bg-red-500 px-3 py-2 rounded hover:bg-red-600"
-        >
+        <button onClick={handleLogout} className="logout-btn">
           Logout Now
         </button>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold">
+      <main className="main-content">
+        <div className="welcome-box">
+          <h2 className="welcome-text">
             Welcome {user?.email || "Guest"}
           </h2>
         </div>

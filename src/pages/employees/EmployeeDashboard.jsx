@@ -39,18 +39,18 @@ const handleSignOut = async () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md">
-      <h1 className="text-2xl font-bold mb-4">
+    <div className="employee-dashboard">
+      <h1 className="dashboard-title">
         Welcome, {profile?.full_name || "Employee"} 👋
       </h1>
 
       {/* Schedule Section */}
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-2">My Schedule</h2>
+      <div className="dashboard-section">
+        <h2 className="section-title">My Schedule</h2>
         {schedule.length === 0 ? (
-          <p>No schedules assigned yet.</p>
+          <p className="empty-text">No schedules assigned yet.</p>
         ) : (
-          <ul className="list-disc pl-5">
+          <ul className="schedule-list">
             {schedule.map((s, idx) => (
               <li key={idx}>
                 {s.date} — {s.shift}
@@ -61,27 +61,27 @@ const handleSignOut = async () => {
       </div>
 
       {/* Attendance Section */}
-      <div>
-        <h2 className="text-lg font-semibold mb-2">My Attendance</h2>
+      <div className="dashboard-section">
+        <h2 className="section-title">My Attendance</h2>
         {attendance.length === 0 ? (
-          <p>No attendance records yet.</p>
+          <p className="empty-text">No attendance records yet.</p>
         ) : (
-          <table className="w-full border-collapse">
+          <table className="attendance-table">
             <thead>
-              <tr className="bg-gray-100 text-left">
-                <th className="p-2 border">Date</th>
-                <th className="p-2 border">Status</th>
-                <th className="p-2 border">Check-in</th>
-                <th className="p-2 border">Check-out</th>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
               </tr>
             </thead>
             <tbody>
               {attendance.map((a, idx) => (
-                <tr key={idx} className="border-b">
-                  <td className="p-2 border">{a.date}</td>
-                  <td className="p-2 border">{a.status}</td>
-                  <td className="p-2 border">{a.check_in || "-"}</td>
-                  <td className="p-2 border">{a.check_out || "-"}</td>
+                <tr key={idx}>
+                  <td>{a.date}</td>
+                  <td>{a.status}</td>
+                  <td>{a.check_in || "-"}</td>
+                  <td>{a.check_out || "-"}</td>
                 </tr>
               ))}
             </tbody>

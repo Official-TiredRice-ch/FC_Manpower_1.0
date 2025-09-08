@@ -1,0 +1,80 @@
+/* styles/EmployeeDashboard.css */
+
+.employee-dashboard {
+  background-color: var(--card-bg, #ffffff);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dashboard-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.dashboard-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  border-left: 4px solid var(--primary-color, #3b82f6);
+  padding-left: 0.5rem;
+}
+
+.empty-text {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.schedule-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+  color: #374151;
+}
+
+/* Attendance Table */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.attendance-table th,
+.attendance-table td {
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.attendance-table thead {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.attendance-table tbody tr:nth-child(even) {
+  background-color: #f3f4f6;
+}
+
+/* 🌙 Dark Mode Support */
+body.dark-mode .employee-dashboard {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+body.dark-mode .attendance-table th,
+body.dark-mode .attendance-table td {
+  border-color: #374151;
+}
+
+body.dark-mode .attendance-table thead {
+  background-color: #111827;
+}
+
+body.dark-mode .attendance-table tbody tr:nth-child(even) {
+  background-color: #1f2937;
+}
