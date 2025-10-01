@@ -4,6 +4,9 @@ import Register from "./pages/auth/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import EmployeeList from "./pages/employees/EmployeeList";
 import PendingEmployees from "./pages/employees/PendingEmployees";
+
+import DepartmentManagement from "./pages/dashboard/DepartmentManagement";
+
 import EmployeeDashboard from "./pages/employees/EmployeeDashboard";
 import ScheduleManagement from "./pages/dashboard/ScheduleManagement";
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -25,6 +28,8 @@ function App() {
       <Route path="/employees" element={<DashboardLayout><EmployeeList /></DashboardLayout>} />
       <Route path="/pending-employees" element={<DashboardLayout><PendingEmployees /></DashboardLayout>} />
       <Route path="/schedules" element={<DashboardLayout><ScheduleManagement /></DashboardLayout>} />
+      <Route path="/departments" element={<DashboardLayout><DepartmentManagement /></DashboardLayout>} />
+
 
       {/* Employee routes */}
       <Route path="/employee-dashboard" element={<DashboardLayout><EmployeeDashboard /></DashboardLayout>} />

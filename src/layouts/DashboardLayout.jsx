@@ -13,17 +13,6 @@ export default function DashboardLayout({ children }) {
 
    
 
-    // 3️⃣ Optional: clear Facebook session
-    if (user?.app_metadata?.provider === "facebook") {
-      window.open(
-        `https://www.facebook.com/logout.php?next=${encodeURIComponent(
-          window.location.origin + "/login"
-        )}&access_token=${user?.access_token}`,
-        "_self"
-      );
-      return; // stop here, redirect handles it
-    }
-
     // 4️⃣ Default: redirect to login
     setUser(null);
     window.location.href = "/login";
@@ -53,6 +42,11 @@ export default function DashboardLayout({ children }) {
               <Link to="/schedules" className="sidebar-link">
                 Schedules
               </Link>
+              <Link to="/departments" className="sidebar-link">
+                Department Management
+              </Link>
+
+
             </>
           ) : (
             <Link to="/employee-dashboard" className="sidebar-link">
