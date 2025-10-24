@@ -1,12 +1,13 @@
-// pages/dashboard/EmployeeDashboard.jsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../context/AuthContext";
+import "../../styles/EmployeeDashboard.css";
 
 export default function EmployeeDashboard() {
   const { user, profile } = useAuth();
   const [schedule, setSchedule] = useState([]);
   const [attendance, setAttendance] = useState([]);
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -18,16 +19,12 @@ export default function EmployeeDashboard() {
   const fetchSchedule = async () => {
     const { data, error } = await supabase
       .from("schedules")
-      .select("date, shift")
+      .select("id, shift_date, shift, shift_start, shift_end, project, status")
       .eq("employee_id", user.id);
-    if (!error) setSchedule(data);
+
+    if (error) console.error("Error fetching schedule:", error.message);
+    else setSchedule(data);
   };
-
-
-const handleSignOut = async () => {
-  await supabase.auth.signOut();
-
-}
 
   const fetchAttendance = async () => {
     const { data, error } = await supabase
@@ -38,31 +35,133 @@ const handleSignOut = async () => {
     if (!error) setAttendance(data);
   };
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+  };
+
   return (
     <div className="employee-dashboard">
-      <h1 className="dashboard-title">
-        Welcome, {profile?.full_name || "Employee"} 👋
-      </h1>
+      <header className="dashboard-header">
+        <h1>Welcome, {profile?.full_name || "Employee"} 👋</h1>
+        <button onClick={handleSignOut} className="signout-btn">
+          Sign Out
+        </button>
+      </header>
 
       {/* Schedule Section */}
-      <div className="dashboard-section">
-        <h2 className="section-title">My Schedule</h2>
+      <section className="dashboard-section">
+        <h2>My Schedule</h2>
         {schedule.length === 0 ? (
           <p className="empty-text">No schedules assigned yet.</p>
         ) : (
           <ul className="schedule-list">
             {schedule.map((s, idx) => (
-              <li key={idx}>
-                {s.date} — {s.shift}
+              <li
+                key={idx}
+                className="schedule-item"
+                onClick={() => setSelectedSchedule(s)}
+              >
+                <span className="schedule-date">{s.shift_date}</span>
+                <span className="schedule-shift">{s.shift}</span>
               </li>
             ))}
           </ul>
         )}
-      </div>
+
+        {/* Schedule Details Modal */}
+        {selectedSchedule && (
+          <div className="modal-overlay" onClick={() => setSelectedSchedule(null)}>
+            <div
+              className="modal-content fancy-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="modal-close"
+                onClick={() => setSelectedSchedule(null)}
+              >
+                ×
+              </button>
+
+              <h3 className="modal-title">🗓 Schedule Overview</h3>
+
+              <div className="modal-body modern-details">
+                <div className="detail-row">
+                  <span className="icon">📅</span>
+                  <div>
+                    <p className="label">Date</p>
+                    <p className="value">{selectedSchedule.shift_date}</p>
+                  </div>
+                </div>
+
+                <div className="detail-row">
+                  <span className="icon">💼</span>
+                  <div>
+                    <p className="label">Shift</p>
+                    <p className="value">{selectedSchedule.shift}</p>
+                  </div>
+                </div>
+
+                <div className="detail-row">
+                  <span className="icon">🕐</span>
+                  <div>
+                    <p className="label">Start Time</p>
+                    <p className="value">
+                      {new Date(`1970-01-01T${selectedSchedule.shift_start}`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true })}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="detail-row">
+                  <span className="icon">🕔</span>
+                  <div>
+                    <p className="label">End Time</p>
+                    <p className="value">
+                      {new Date(`1970-01-01T${selectedSchedule.shift_end}`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hour12: true })}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="detail-row">
+                  <span className="icon">📂</span>
+                  <div>
+                    <p className="label">Project</p>
+                    <p className="value">{selectedSchedule.project || "N/A"}</p>
+                  </div>
+                </div>
+
+                <div className="detail-row">
+                  <span className="icon">🎯</span>
+                  <div>
+                    <p className="label">Status</p>
+                    <span
+                      className={`status-chip ${
+                        selectedSchedule.status?.toLowerCase() || "default"
+                      }`}
+                    >
+                      {selectedSchedule.status}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  className="modal-button"
+                  onClick={() => setSelectedSchedule(null)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+
+      </section>
 
       {/* Attendance Section */}
-      <div className="dashboard-section">
-        <h2 className="section-title">My Attendance</h2>
+      <section className="dashboard-section">
+        <h2>My Attendance</h2>
         {attendance.length === 0 ? (
           <p className="empty-text">No attendance records yet.</p>
         ) : (
@@ -79,7 +178,17 @@ const handleSignOut = async () => {
               {attendance.map((a, idx) => (
                 <tr key={idx}>
                   <td>{a.date}</td>
-                  <td>{a.status}</td>
+                  <td
+                    className={`status ${
+                      a.status === "Present"
+                        ? "present"
+                        : a.status === "Absent"
+                        ? "absent"
+                        : "pending"
+                    }`}
+                  >
+                    {a.status}
+                  </td>
                   <td>{a.check_in || "-"}</td>
                   <td>{a.check_out || "-"}</td>
                 </tr>
@@ -87,7 +196,11 @@ const handleSignOut = async () => {
             </tbody>
           </table>
         )}
-      </div>
+      </section>
+
+      <footer className="dashboard-footer">
+        Employee Dashboard © {new Date().getFullYear()}
+      </footer>
     </div>
   );
 }

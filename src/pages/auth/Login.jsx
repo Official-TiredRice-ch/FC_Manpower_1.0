@@ -17,7 +17,8 @@ export default function Login() {
   useEffect(() => {
     const handleOAuthRedirect = async () => {
       try {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSessionFromUrl();
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) await handlePostLogin(session.user);
         if (sessionError) {
           console.error("OAuth session error:", sessionError.message);
           return;

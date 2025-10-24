@@ -208,41 +208,41 @@ export default function ScheduleManagement() {
         className="schedule-form"
       >
         <select
-  value={newSchedule.employee_id}
-  onChange={(e) =>
-    setNewSchedule({ ...newSchedule, employee_id: e.target.value })
-  }
-  required
->
-  <option value="">Select Employee</option>
-  {employees.map((emp) => {
-    let deptLabel = "(No Dept)";
+        value={newSchedule.employee_id}
+        onChange={(e) =>
+          setNewSchedule({ ...newSchedule, employee_id: e.target.value })
+        }
+        required
+      >
+        <option value="">Select Employee</option>
+        {employees.map((emp) => {
+          let deptLabel = "(No Dept)";
 
-    // Default to permanent dept
-    if (emp.departments?.name) {
-      deptLabel = `(${emp.departments.name})`;
-    }
+          // Default to permanent dept
+          if (emp.departments?.name) {
+            deptLabel = `(${emp.departments.name})`;
+          }
 
-    // 👇 If you're editing/assigning AND you chose a temp dept → override display
-    if (
-      newSchedule.employee_id === emp.id &&
-      newSchedule.temporary_department
-    ) {
-      const tempDept = departments.find(
-        (d) => d.id === newSchedule.temporary_department
-      );
-      if (tempDept) {
-        deptLabel = `(${tempDept.name} - TEMP)`;
-      }
-    }
+          // 👇 If you're editing/assigning AND you chose a temp dept → override display
+          if (
+            newSchedule.employee_id === emp.id &&
+            newSchedule.temporary_department
+          ) {
+            const tempDept = departments.find(
+              (d) => d.id === newSchedule.temporary_department
+            );
+            if (tempDept) {
+              deptLabel = `(${tempDept.name} - TEMP)`;
+            }
+          }
 
-    return (
-      <option key={emp.id} value={emp.id}>
-        {emp.full_name} {deptLabel}
-      </option>
-    );
-  })}
-</select>
+          return (
+            <option key={emp.id} value={emp.id}>
+              {emp.full_name} {deptLabel}
+            </option>
+          );
+        })}
+      </select>
 
 
 

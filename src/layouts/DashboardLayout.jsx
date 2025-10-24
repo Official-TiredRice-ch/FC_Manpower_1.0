@@ -6,13 +6,11 @@ import "../styles/DashboardLayout.css";
 export default function DashboardLayout({ children }) {
   const { user, profile, setUser } = useAuth(); // ✅ include setUser
 
+  
   const handleLogout = async () => {
   try {
     // 1️⃣ Sign out from Supabase
     await supabase.auth.signOut();
-
-   
-
     // 4️⃣ Default: redirect to login
     setUser(null);
     window.location.href = "/login";
