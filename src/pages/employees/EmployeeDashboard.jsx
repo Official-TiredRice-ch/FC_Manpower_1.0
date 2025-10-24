@@ -61,7 +61,14 @@ export default function EmployeeDashboard() {
                 className="schedule-item"
                 onClick={() => setSelectedSchedule(s)}
               >
-                <span className="schedule-date">{s.shift_date}</span>
+                <span className="schedule-date">
+                  {new Date(s.shift_date).toLocaleDateString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
                 <span className="schedule-shift">{s.shift}</span>
               </li>
             ))}
@@ -89,7 +96,14 @@ export default function EmployeeDashboard() {
                   <span className="icon">📅</span>
                   <div>
                     <p className="label">Date</p>
-                    <p className="value">{selectedSchedule.shift_date}</p>
+                    <p className="value">
+                    {new Date(selectedSchedule.shift_date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
                   </div>
                 </div>
 
